@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -10,7 +11,7 @@
 <body>
 
 <header>
-  <h1>⚡ PokéWorld</h1>
+  <div class="logo">⚡ PokéWorld</div>
 
   <nav>
     <button onclick="showPage('accueil')">Accueil</button>
@@ -24,75 +25,136 @@
 <main>
 
 <section id="accueil" class="page">
-  <h2>Bienvenue dans PokéWorld !</h2>
-  <p>Explore le monde Pokémon, complète ton Pokédex et gagne de l'XP.</p>
+  <div class="hero">
+    <p>BIENVENUE DRESSEUR</p>
+    <h1>Explore le monde Pokémon ⚡</h1>
+    <p>
+      Découvre les 151 premiers Pokémon de Kanto,
+      teste tes connaissances et gagne de l'XP.
+    </p>
 
-  <button onclick="showPage('pokedex')">
-    Ouvrir le Pokédex
-  </button>
+```
+<button class="main-button" onclick="showPage('pokedex')">
+  📖 Ouvrir le Pokédex
+</button>
+```
+
+  </div>
 </section>
 
 <section id="pokedex" class="page hidden">
-  <h2>📖 Pokédex</h2>
 
-  <input
-    id="search"
-    type="text"
-    placeholder="Rechercher un Pokémon..."
-    oninput="searchPokemon()"
-  >
+  <h1>📖 Pokédex de Kanto</h1>
+
+  <p class="subtitle">
+    Les 151 premiers Pokémon
+  </p>
+
+<input
+id="search"
+type="search"
+placeholder="🔎 Rechercher un Pokémon..."
+oninput="searchPokemon()"
+
+>
+
+  <p id="loading">⏳ Chargement des Pokémon...</p>
 
   <div id="pokemon-list"></div>
+
 </section>
 
 <section id="quiz" class="page hidden">
-  <h2>🧠 Quiz Pokémon</h2>
 
-  <p id="question"></p>
+  <h1>🧠 Quiz Pokémon</h1>
 
-  <div id="answers"></div>
+  <div class="quiz-box">
 
-  <p id="score">XP : 0</p>
+```
+<h2 id="question">
+  Quel Pokémon est de type Électrik ?
+</h2>
+
+<button onclick="answer('Pikachu')">
+  ⚡ Pikachu
+</button>
+
+<button onclick="answer('Bulbizarre')">
+  🌱 Bulbizarre
+</button>
+
+<button onclick="answer('Salamèche')">
+  🔥 Salamèche
+</button>
+
+<p id="quiz-result"></p>
+```
+
+  </div>
+
 </section>
 
 <section id="regions" class="page hidden">
-  <h2>🗺️ Régions</h2>
+
+  <h1>🗺️ Régions</h1>
 
   <div class="region">
-    <h3>Kanto</h3>
-    <p>La région des débuts.</p>
+    <h2>🇯🇵 Kanto</h2>
+    <p>La région des 151 premiers Pokémon.</p>
   </div>
 
   <div class="region">
-    <h3>Johto</h3>
-    <p>Une région pleine de traditions.</p>
+    <h2>🌸 Johto</h2>
+    <p>Une région riche en traditions.</p>
   </div>
 
   <div class="region">
-    <h3>Hoenn</h3>
-    <p>Une région entourée par la mer.</p>
+    <h2>🌊 Hoenn</h2>
+    <p>Une région entourée par les océans.</p>
   </div>
 
   <div class="region">
-    <h3>Sinnoh</h3>
-    <p>Une région connue pour ses légendes.</p>
+    <h2>🏔️ Sinnoh</h2>
+    <p>Une région pleine de légendes.</p>
   </div>
+
 </section>
 
 <section id="profil" class="page hidden">
-  <h2>👤 Mon profil</h2>
 
-  <input id="username" placeholder="Ton pseudo">
+  <h1>👤 Mon profil</h1>
 
-  <button onclick="saveProfile()">
-    Enregistrer
-  </button>
+  <div class="profile">
 
-  <p>Pseudo : <strong id="profile-name">Dresseur</strong></p>
-  <p>⭐ XP : <strong id="profile-xp">0</strong></p>
+```
+<div class="avatar">⚡</div>
+
+<h2 id="profile-name">
+  Dresseur
+</h2>
+
+<p>⭐ XP : <strong id="xp">0</strong></p>
+
+<input
+  id="username"
+  maxlength="20"
+  placeholder="Ton pseudo"
+>
+
+<button onclick="saveProfile()">
+  Enregistrer
+</button>
+```
+
+  </div>
+
 </section>
 
 </main>
+
+<footer>
+  PokéWorld • Projet fan non officiel
+</footer>
 
 <script src="script.js"></script>
 
