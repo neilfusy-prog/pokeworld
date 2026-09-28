@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokéWorld</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>⚡ PokéWorld</h1>
+
+  <nav>
+    <button onclick="showPage('accueil')">Accueil</button>
+    <button onclick="showPage('pokedex')">Pokédex</button>
+    <button onclick="showPage('quiz')">Quiz</button>
+    <button onclick="showPage('regions')">Régions</button>
+    <button onclick="showPage('profil')">Profil</button>
+  </nav>
+</header>
+
+<main>
+
+<section id="accueil" class="page">
+  <h2>Bienvenue dans PokéWorld !</h2>
+  <p>Explore le monde Pokémon, complète ton Pokédex et gagne de l'XP.</p>
+
+  <button onclick="showPage('pokedex')">
+    Ouvrir le Pokédex
+  </button>
+</section>
+
+<section id="pokedex" class="page hidden">
+  <h2>📖 Pokédex</h2>
+
+  <input
+    id="search"
+    type="text"
+    placeholder="Rechercher un Pokémon..."
+    oninput="searchPokemon()"
+  >
+
+  <div id="pokemon-list"></div>
+</section>
+
+<section id="quiz" class="page hidden">
+  <h2>🧠 Quiz Pokémon</h2>
+
+  <p id="question"></p>
+
+  <div id="answers"></div>
+
+  <p id="score">XP : 0</p>
+</section>
+
+<section id="regions" class="page hidden">
+  <h2>🗺️ Régions</h2>
+
+  <div class="region">
+    <h3>Kanto</h3>
+    <p>La région des débuts.</p>
+  </div>
+
+  <div class="region">
+    <h3>Johto</h3>
+    <p>Une région pleine de traditions.</p>
+  </div>
+
+  <div class="region">
+    <h3>Hoenn</h3>
+    <p>Une région entourée par la mer.</p>
+  </div>
+
+  <div class="region">
+    <h3>Sinnoh</h3>
+    <p>Une région connue pour ses légendes.</p>
+  </div>
+</section>
+
+<section id="profil" class="page hidden">
+  <h2>👤 Mon profil</h2>
+
+  <input id="username" placeholder="Ton pseudo">
+
+  <button onclick="saveProfile()">
+    Enregistrer
+  </button>
+
+  <p>Pseudo : <strong id="profile-name">Dresseur</strong></p>
+  <p>⭐ XP : <strong id="profile-xp">0</strong></p>
+</section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
