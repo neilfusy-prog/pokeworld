@@ -1,219 +1,192 @@
 let pokemon = [];
-let xp = 0;
 
-const typeFR = {
-  normal: "Normal",
-  fire: "Feu",
-  water: "Eau",
-  electric: "Électrik",
-  grass: "Plante",
-  ice: "Glace",
-  fighting: "Combat",
-  poison: "Poison",
-  ground: "Sol",
-  flying: "Vol",
-  psychic: "Psy",
-  bug: "Insecte",
-  rock: "Roche",
-  ghost: "Spectre",
-  dragon: "Dragon"
-};
-
-const namesFR = [
-  "Bulbizarre","Herbizarre","Florizarre","Salamèche","Reptincel",
-  "Dracaufeu","Carapuce","Carabaffe","Tortank","Chenipan",
-  "Chrysacier","Papilusion","Aspicot","Coconfort","Dardargnan",
-  "Roucool","Roucoups","Roucarnage","Rattata","Rattatac",
-  "Piafabec","Rapasdepic","Abo","Arbok","Pikachu",
-  "Raichu","Sabelette","Sablaireau","Nidoran♀","Nidorina",
-  "Nidoqueen","Nidoran♂","Nidorino","Nidoking","Mélofée",
-  "Mélodelfe","Goupix","Feunard","Rondoudou","Grodoudou",
-  "Nosferapti","Nosferalto","Mystherbe","Ortide","Rafflesia",
-  "Paras","Parasect","Mimitoss","Aéromite","Taupiqueur",
-  "Triopikeur","Miaouss","Persian","Psykokwak","Akwakwak",
-  "Férosinge","Colossinge","Caninos","Arcanin","Ptitard",
-  "Têtarte","Tartard","Abra","Kadabra","Alakazam",
-  "Machoc","Machopeur","Mackogneur","Chétiflor","Boustiflor",
-  "Empiflor","Tentacool","Tentacruel","Racaillou","Gravalanch",
-  "Grolem","Ponyta","Galopa","Ramoloss","Flagadoss",
-  "Magnéti","Magnéton","Canarticho","Doduo","Dodrio",
-  "Otaria","Lamantine","Tadmorv","Grotadmorv","Kokiyas",
-  "Crustabri","Fantominus","Spectrum","Ectoplasma","Onix",
-  "Soporifik","Hypnomade","Krabby","Krabboss","Voltorbe",
-  "Électrode","Noeunoeuf","Noadkoko","Osselait","Ossatueur",
-  "Kicklee","Tygnon","Excelangue","Smogo","Smogogo",
-  "Rhinocorne","Rhinoféros","Leveinard","Saquedeneu","Kangourex",
-  "Hypotrempe","Hypocéan","Poissirène","Poissoroy","Stari",
-  "Staross","M. Mime","Insécateur","Lippoutou","Élektek",
-  "Magmar","Scarabrute","Tauros","Magicarpe","Léviator",
-  "Lokhlass","Métamorph","Évoli","Aquali","Voltali",
-  "Pyroli","Porygon","Amonita","Amonistar","Kabuto",
-  "Kabutops","Ptéra","Ronflex","Artikodin","Électhor",
-  "Sulfura","Minidraco","Draco","Dracolosse","Mewtwo","Mew"
-];
+const pokemonList = document.getElementById("pokemon-list");
+const pokemonDetails = document.getElementById("pokemon-details");
+const search = document.getElementById("search");
+const backButton = document.getElementById("back-button");
 
 async function loadPokemon() {
-  const container = document.getElementById("pokemon-list");
 
-  if (!container) return;
+    try {
 
-  container.innerHTML = "<p>⏳ Chargement des 151 Pokémon...</p>";
+        const response = await fetch(
+            "https://pokeapi.co/api/v2/pokemon?limit=151"
+        );
 
-  try {
-    const response = await fetch(
-      "https://pokeapi.co/api/v2/pokemon?limit=151"
-    );
+        const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error("Erreur API");
+        pokemon = data.results;
+
+        displayPokemon(pokemon);
+
+    } catch (error) {
+
+        pokemonList.innerHTML =
+            "<p>Impossible de charger les Pokémon.</p>";
+
+        console.error(error);
     }
-
-    const data = await response.json();
-
-    const details = await Promise.all(
-      data.results.map(async (pokemonData) => {
-        const response = await fetch(pokemonData.url);
-
-        if (!response.ok) {
-          throw new Error("Erreur Pokémon");
-        }
-
-        return await response.json();
-      })
-    );
-
-    pokemon = details.map((p) => ({
-      id: p.id,
-      name: namesFR[p.id - 1] || p.name,
-      types: p.types.map(
-        (t) => typeFR[t.type.name] || t.type.name
-      ),
-      image:
-        p.sprites.other["official-artwork"].front_default
-    }));
-
-    const loading = document.getElementById("loading");
-
-    if (loading) {
-      loading.style.display = "none";
-    }
-
-    displayPokemon(pokemon);
-
-  } catch (error) {
-    console.error(error);
-
-    container.innerHTML =
-      "<p>❌ Impossible de charger les Pokémon. Recharge la page.</p>";
-  }
 }
+
 
 function displayPokemon(list) {
-  const container = document.getElementById("pokemon-list");
 
-  if (!container) return;
+    pokemonList.innerHTML = "";
 
-  container.innerHTML = "";
+    list.forEach((poke, index) => {
 
-  list.forEach((p) => {
-    const number = String(p.id).padStart(3, "0");
+        const card = document.createElement("div");
 
-    container.innerHTML += `
-      <article class="pokemon">
-        <img
-          src="${p.image}"
-          alt="${p.name}"
-          loading="lazy"
-        >
+        card.classList.add("pokemon");
 
-        <div class="pokemon-number">
-          N° ${number}
-        </div>
+        const number = String(index + 1).padStart(3, "0");
 
-        <h3>${p.name}</h3>
+        card.innerHTML = `
+            <img
+                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png"
+                alt="${poke.name}"
+            >
 
-        <span class="pokemon-type">
-          ${p.types.join(" • ")}
-        </span>
-      </article>
-    `;
-  });
+            <div class="pokemon-number">#${number}</div>
+
+            <h3>${poke.name}</h3>
+        `;
+
+        card.addEventListener("click", () => {
+            showPokemonDetails(index + 1);
+        });
+
+        pokemonList.appendChild(card);
+    });
 }
 
-function searchPokemon() {
-  const input = document.getElementById("search");
 
-  if (!input) return;
+async function showPokemonDetails(id) {
 
-  const search = input.value.toLowerCase().trim();
+    try {
 
-  const results = pokemon.filter((p) =>
-    p.name.toLowerCase().includes(search) ||
-    String(p.id).includes(search)
-  );
+        const response = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${id}`
+        );
 
-  displayPokemon(results);
-}
+        const data = await response.json();
 
-function showPage(page) {
-  document.querySelectorAll(".page").forEach((section) => {
-    section.classList.add("hidden");
-  });
+        document.getElementById("pokemon-name").textContent =
+            data.name;
 
-  const selectedPage = document.getElementById(page);
+        document.getElementById("pokemon-id").textContent =
+            `#${String(data.id).padStart(3, "0")}`;
 
-  if (selectedPage) {
-    selectedPage.classList.remove("hidden");
-  }
-}
+        document.getElementById("pokemon-image").src =
+            data.sprites.other["official-artwork"].front_default;
 
-function answer(choice) {
-  const result = document.getElementById("quiz-result");
+        document.getElementById("pokemon-image").alt =
+            data.name;
 
-  if (!result) return;
+        document.getElementById("pokemon-types").textContent =
+            "Type : " +
+            data.types
+                .map(type => type.type.name)
+                .join(" / ");
 
-  if (choice === "Pikachu") {
-    xp += 20;
-    result.textContent = "✅ Bonne réponse ! +20 XP ⚡";
-  } else {
-    result.textContent = "❌ Pas cette fois !";
-  }
+        document.getElementById("pokemon-height").textContent =
+            `${data.height / 10} m`;
 
-  const xpElement = document.getElementById("xp");
+        document.getElementById("pokemon-weight").textContent =
+            `${data.weight / 10} kg`;
 
-  if (xpElement) {
-    xpElement.textContent = xp;
-  }
-}
+        displayStats(data.stats);
 
-function saveProfile() {
-  const input = document.getElementById("username");
+        pokemonList.classList.add("hidden");
+        pokemonDetails.classList.remove("hidden");
 
-  if (!input) return;
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
-  const name = input.value.trim();
+    } catch (error) {
 
-  if (!name) return;
+        console.error(error);
 
-  const profileName = document.getElementById("profile-name");
-
-  if (profileName) {
-    profileName.textContent = name;
-  }
-
-  localStorage.setItem("pokeworld-name", name);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const savedName = localStorage.getItem("pokeworld-name");
-
-  if (savedName) {
-    const profileName = document.getElementById("profile-name");
-
-    if (profileName) {
-      profileName.textContent = savedName;
+        alert("Impossible de charger les informations du Pokémon.");
     }
-  }
+}
 
-  loadPokemon();
+
+function displayStats(stats) {
+
+    const statsContainer =
+        document.getElementById("pokemon-stats");
+
+    statsContainer.innerHTML = "";
+
+    const statNames = {
+        hp: "PV",
+        attack: "Attaque",
+        defense: "Défense",
+        "special-attack": "Attaque Spé.",
+        "special-defense": "Défense Spé.",
+        speed: "Vitesse"
+    };
+
+    stats.forEach(stat => {
+
+        const value = stat.base_stat;
+
+        const percentage = Math.min(
+            (value / 255) * 100,
+            100
+        );
+
+        const statElement = document.createElement("div");
+
+        statElement.classList.add("stat");
+
+        statElement.innerHTML = `
+            <div class="stat-name">
+                <span>${statNames[stat.stat.name]}</span>
+                <strong>${value}</strong>
+            </div>
+
+            <div class="stat-bar">
+                <div
+                    class="stat-fill"
+                    style="width: ${percentage}%"
+                ></div>
+            </div>
+        `;
+
+        statsContainer.appendChild(statElement);
+    });
+}
+
+
+search.addEventListener("input", () => {
+
+    const searchText =
+        search.value.toLowerCase().trim();
+
+    const filteredPokemon =
+        pokemon.filter(poke =>
+            poke.name.includes(searchText)
+        );
+
+    displayPokemon(filteredPokemon);
 });
+
+
+backButton.addEventListener("click", () => {
+
+    pokemonDetails.classList.add("hidden");
+
+    pokemonList.classList.remove("hidden");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+
+
+loadPokemon();
