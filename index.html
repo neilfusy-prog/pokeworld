@@ -1,162 +1,58 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PokéWorld</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-  <div class="logo">⚡ PokéWorld</div>
+    <header>
+        <h1>Pokédex</h1>
+        <input
+            type="text"
+            id="search"
+            placeholder="Rechercher un Pokémon..."
+        >
+    </header>
 
-  <nav>
-    <button onclick="showPage('accueil')">Accueil</button>
-    <button onclick="showPage('pokedex')">Pokédex</button>
-    <button onclick="showPage('quiz')">Quiz</button>
-    <button onclick="showPage('regions')">Régions</button>
-    <button onclick="showPage('profil')">Profil</button>
-  </nav>
-</header>
+    <main>
 
-<main>
+        <!-- Liste des Pokémon -->
+        <section id="pokemon-list"></section>
 
-<section id="accueil" class="page">
-  <div class="hero">
-    <p>BIENVENUE DRESSEUR</p>
-    <h1>Explore le monde Pokémon ⚡</h1>
-    <p>
-      Découvre les 151 premiers Pokémon de Kanto,
-      teste tes connaissances et gagne de l'XP.
-    </p>
+        <!-- Fiche détaillée -->
+        <section id="pokemon-details" class="hidden">
 
-```
-<button class="main-button" onclick="showPage('pokedex')">
-  📖 Ouvrir le Pokédex
-</button>
-```
+            <button id="back-button">← Retour</button>
 
-  </div>
-</section>
+            <div class="pokemon-card">
 
-<section id="pokedex" class="page hidden">
+                <h2 id="pokemon-name"></h2>
 
-  <h1>📖 Pokédex de Kanto</h1>
+                <img id="pokemon-image" src="" alt="">
 
-  <p class="subtitle">
-    Les 151 premiers Pokémon
-  </p>
+                <p id="pokemon-types"></p>
 
-<input
-id="search"
-type="search"
-placeholder="🔎 Rechercher un Pokémon..."
-oninput="searchPokemon()"
+                <div class="info">
+                    <p><strong>Numéro :</strong> <span id="pokemon-id"></span></p>
+                    <p><strong>Taille :</strong> <span id="pokemon-height"></span></p>
+                    <p><strong>Poids :</strong> <span id="pokemon-weight"></span></p>
+                </div>
 
->
+                <h3>Statistiques</h3>
 
-  <p id="loading">⏳ Chargement des Pokémon...</p>
+                <div id="pokemon-stats"></div>
 
-  <div id="pokemon-list"></div>
+            </div>
 
-</section>
+        </section>
 
-<section id="quiz" class="page hidden">
+    </main>
 
-  <h1>🧠 Quiz Pokémon</h1>
-
-  <div class="quiz-box">
-
-```
-<h2 id="question">
-  Quel Pokémon est de type Électrik ?
-</h2>
-
-<button onclick="answer('Pikachu')">
-  ⚡ Pikachu
-</button>
-
-<button onclick="answer('Bulbizarre')">
-  🌱 Bulbizarre
-</button>
-
-<button onclick="answer('Salamèche')">
-  🔥 Salamèche
-</button>
-
-<p id="quiz-result"></p>
-```
-
-  </div>
-
-</section>
-
-<section id="regions" class="page hidden">
-
-  <h1>🗺️ Régions</h1>
-
-  <div class="region">
-    <h2>🇯🇵 Kanto</h2>
-    <p>La région des 151 premiers Pokémon.</p>
-  </div>
-
-  <div class="region">
-    <h2>🌸 Johto</h2>
-    <p>Une région riche en traditions.</p>
-  </div>
-
-  <div class="region">
-    <h2>🌊 Hoenn</h2>
-    <p>Une région entourée par les océans.</p>
-  </div>
-
-  <div class="region">
-    <h2>🏔️ Sinnoh</h2>
-    <p>Une région pleine de légendes.</p>
-  </div>
-
-</section>
-
-<section id="profil" class="page hidden">
-
-  <h1>👤 Mon profil</h1>
-
-  <div class="profile">
-
-```
-<div class="avatar">⚡</div>
-
-<h2 id="profile-name">
-  Dresseur
-</h2>
-
-<p>⭐ XP : <strong id="xp">0</strong></p>
-
-<input
-  id="username"
-  maxlength="20"
-  placeholder="Ton pseudo"
->
-
-<button onclick="saveProfile()">
-  Enregistrer
-</button>
-```
-
-  </div>
-
-</section>
-
-</main>
-
-<footer>
-  PokéWorld • Projet fan non officiel
-</footer>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
